@@ -62,15 +62,14 @@ Follow this recipe to configure **Pipeline 1** on your Limelight to track a spec
 
 ---
 
-## 🎓 Plain Java Practice Exercises (Pre-Robot Training)
+## 🎓 Plain Java Practice Exercises & Coach Solutions
 
-Before working with the physical robot, students can build confidence by running the plain Java simulation exercises in the `practice/` directory:
+Before working with the physical robot, students can build confidence by running the plain Java simulation exercises:
 
-- 🟢 **[Practice1_PControl.java](file:///c:/Users/chand/OneDrive/Documents/ftc_coach/practice/src/main/java/com/ftc/practice/Practice1_PControl.java):** Master Proportional Control math and power clamping.
-- 🟡 **[Practice2_ArcadeDrive.java](file:///c:/Users/chand/OneDrive/Documents/ftc_coach/practice/src/main/java/com/ftc/practice/Practice2_ArcadeDrive.java):** Practice Arcade Drive power mixing and magnitude normalization.
-- 🔴 **[Practice3_SummonSimulator.java](file:///c:/Users/chand/OneDrive/Documents/ftc_coach/practice/src/main/java/com/ftc/practice/Practice3_SummonSimulator.java):** Run a full console simulation of 6 time-steps testing target lock, deadman switch, and emergency stop.
-
-See **[practice/README_PRACTICE.md](file:///c:/Users/chand/OneDrive/Documents/ftc_coach/practice/README_PRACTICE.md)** for detailed instructions.
+- 🟢 **[Practice1_PControl.java](file:///c:/Users/chand/OneDrive/Documents/ftc_coach/practice/src/main/java/com/ftc/practice/Practice1_PControl.java):** Master Proportional Control math and power clamping (`// TODO` Student Worksheet).
+- 🟡 **[Practice2_ArcadeDrive.java](file:///c:/Users/chand/OneDrive/Documents/ftc_coach/practice/src/main/java/com/ftc/practice/Practice2_ArcadeDrive.java):** Practice Arcade Drive power mixing and magnitude normalization (`// TODO` Student Worksheet).
+- 🔴 **[Practice3_SummonSimulator.java](file:///c:/Users/chand/OneDrive/Documents/ftc_coach/practice/src/main/java/com/ftc/practice/Practice3_SummonSimulator.java):** Run a full console simulation testing target lock, deadman switch, and emergency stop (`// TODO` Student Worksheet).
+- 📋 **[COACH_GUIDE.md](file:///c:/Users/chand/OneDrive/Documents/ftc_coach/coach_solutions/COACH_GUIDE.md):** Complete Coach Teaching Guide, Discussion Questions, Common Pitfalls, and Answer Keys located in `coach_solutions/`.
 
 ---
 
@@ -86,7 +85,7 @@ ftc_coach/
 │                   └── firstinspires/
 │                       └── ftc/
 │                           └── LimelightSummonOpMode.java
-├── practice/
+├── practice/ (Student Worksheets)
 │   ├── README_PRACTICE.md
 │   └── src/
 │       └── main/
@@ -97,6 +96,17 @@ ftc_coach/
 │                           ├── Practice1_PControl.java
 │                           ├── Practice2_ArcadeDrive.java
 │                           └── Practice3_SummonSimulator.java
+├── coach_solutions/ (Coach Reference Solutions)
+│   ├── COACH_GUIDE.md
+│   └── src/
+│       └── main/
+│           └── java/
+│               └── com/
+│                   └── ftc/
+│                       └── coach/
+│                           ├── Solution1_PControl.java
+│                           ├── Solution2_ArcadeDrive.java
+│                           └── Solution3_SummonSimulator.java
 ├── .gitignore
 └── README.md
 ```

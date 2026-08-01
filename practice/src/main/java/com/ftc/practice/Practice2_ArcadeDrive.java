@@ -1,33 +1,35 @@
 package com.ftc.practice;
 
 /**
- * EXERCISE 2: Arcade Drive Power Mixer & Normalization
+ * EXERCISE 2: Arcade Drive Power Mixer & Normalization (Student Worksheet)
  * 
  * Objective:
  * Combine forward drive power and turn power into left/right wheel powers,
  * ensuring no motor receives a value greater than 1.0 or less than -1.0.
+ * 
+ * Instructions:
+ * 1. Calculate leftPower (drive + turn) and rightPower (drive - turn).
+ * 2. Find the maximum absolute magnitude between leftPower and rightPower.
+ * 3. If the magnitude is > 1.0, divide both powers by the magnitude.
  */
 public class Practice2_ArcadeDrive {
 
     public static double[] mixArcadeDrive(double drive, double turn) {
-        // Step 1: Calculate raw arcade drive powers
-        double leftPower  = drive + turn;
-        double rightPower = drive - turn;
+        // TODO #1: Calculate raw arcade drive powers
+        double leftPower  = 0.0; // Replace with (drive + turn)
+        double rightPower = 0.0; // Replace with (drive - turn)
 
-        // Step 2: Find the maximum absolute magnitude between left and right
-        double maxMagnitude = Math.max(Math.abs(leftPower), Math.abs(rightPower));
+        // TODO #2: Find the max magnitude between Math.abs(leftPower) and Math.abs(rightPower)
+        double maxMagnitude = 1.0; // Replace with Math.max()
 
-        // Step 3: If magnitude exceeds 1.0, scale both down proportionally
-        if (maxMagnitude > 1.0) {
-            leftPower /= maxMagnitude;
-            rightPower /= maxMagnitude;
-        }
+        // TODO #3: Scale both down if maxMagnitude > 1.0
+        // Hint: leftPower /= maxMagnitude; rightPower /= maxMagnitude;
 
         return new double[]{leftPower, rightPower};
     }
 
     public static void main(String[] args) {
-        System.out.println("=== Exercise 2: Arcade Drive Mixing Test ===");
+        System.out.println("=== Exercise 2: Arcade Drive Mixing (Student Practice) ===");
 
         // Test Inputs: {drive, turn}
         double[][] inputs = {
