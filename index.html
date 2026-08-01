@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FTC Robot Limelight Summon & Vision Tracking Portal</title>
+  <meta name="description" content="FTC FIRST Tech Challenge Robot Limelight 3A Summon & Student Follower interactive lesson portal, practice labs, and coach solutions.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Sticky Header Nav -->
+  <header>
+    <div class="logo-container">
+      <span class="logo-icon">🤖</span>
+      <span class="logo-text">FTC Coach Portal</span>
+    </div>
+    <ul class="nav-tabs">
+      <li><button class="nav-btn active" data-tab="simulator">🎮 Live Simulator</button></li>
+      <li><button class="nav-btn" data-tab="lesson">📚 Student Lesson</button></li>
+      <li><button class="nav-btn" data-tab="recipes">🎨 Color & Vision Recipes</button></li>
+      <li><button class="nav-btn" data-tab="solutions">📋 Coach Solutions</button></li>
+    </ul>
+  </header>
+
+  <div class="container">
+    <!-- Hero Banner -->
+    <section class="hero">
+      <h1 class="hero-title">Limelight Target Follower & Summon Portal</h1>
+      <p class="hero-subtitle">Interactive student lessons, plain Java feedback control practice labs, Limelight HSV vision recipes, and coach answer keys for FIRST Tech Challenge.</p>
+      <div class="badge-row">
+        <span class="badge">FTC SDK 9.x+</span>
+        <span class="badge">Limelight 3A</span>
+        <span class="badge">P-Control Math</span>
+        <span class="badge">AprilTag & HSV Color Blob</span>
+      </div>
+    </section>
+
+    <!-- TAB 1: Live Interactive Telemetry Simulator -->
+    <section id="simulator" class="tab-content active">
+      <div class="card">
+        <h2 class="card-title">🎮 Interactive Limelight Telemetry & Control Simulator</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">
+          Drag the sliders below to simulate a student moving in front of the robot's camera. Watch how the Proportional Controller calculates turn power, drive power, and motor outputs in real-time!
+        </p>
+
+        <div class="sim-container">
+          <div class="sim-screen" id="sim-screen">
+            <div class="crosshair-h"></div>
+            <div class="crosshair-v"></div>
+            <div class="sim-target" id="sim-target">TARGET</div>
+          </div>
+
+          <div class="sim-controls">
+            <div class="slider-group">
+              <label for="slider-tx">Horizontal Angle Offset (tx): <span id="val-tx" style="color: var(--accent-cyan);">+0.0°</span></label>
+              <input type="range" id="slider-tx" min="-31" max="31" step="0.5" value="12">
+            </div>
+
+            <div class="slider-group">
+              <label for="slider-ta">Target Screen Area (ta %): <span id="val-ta" style="color: var(--accent-cyan);">8.0%</span></label>
+              <input type="range" id="slider-ta" min="0.5" max="25" step="0.5" value="4.0">
+            </div>
+
+            <div class="slider-group">
+              <label><input type="checkbox" id="check-target-valid" checked> Target Visible (isValid = true)</label>
+              <label style="margin-top: 0.5rem;"><input type="checkbox" id="check-deadman" checked> Deadman Switch Pressed (Trigger > 0.3)</label>
+            </div>
+          </div>
+
+          <div class="sim-outputs">
+            <div class="metric-box">
+              <div class="metric-val" id="val-state" style="color: var(--accent-green);">ACTIVE</div>
+              <div class="metric-lbl">Robot State</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-val" id="val-drive">+0.14</div>
+              <div class="metric-lbl">Drive Power</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-val" id="val-turn">+0.30</div>
+              <div class="metric-lbl">Turn Power</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-val" id="val-left" style="color: var(--primary-gold);">+0.44</div>
+              <div class="metric-lbl">Left Motor</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-val" id="val-right" style="color: var(--primary-gold);">-0.16</div>
+              <div class="metric-lbl">Right Motor</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: Student Lesson -->
+    <section id="lesson" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">📚 Student Lesson & Concept Refresher</h2>
+        <p style="margin-bottom: 1.5rem;">Read through the core robotics concepts below before working on your Java practice worksheets.</p>
+
+        <h3 style="color: var(--primary-gold); margin-bottom: 0.5rem;">1. Vision Camera Telemetry (tx & ta)</h3>
+        <p>The Limelight vision camera processes frames at 100 Hz and sends target offsets to your code:</p>
+        <ul style="margin: 1rem 0 1.5rem 1.5rem; color: var(--text-muted);">
+          <li><strong>tx (Heading Error):</strong> Horizontal angle offset from screen center (-31° to +31°). Negative means target is to the left; positive means right.</li>
+          <li><strong>ta (Target Area):</strong> Percentage of image frame occupied by target. Small ta means far away; large ta means close.</li>
+        </ul>
+
+        <h3 style="color: var(--primary-gold); margin-bottom: 0.5rem;">2. Proportional (P) Control Math</h3>
+        <p>Instead of driving at a static speed, motor power scales proportionally with error:</p>
+        <pre><code>turnPower  = tx * KP_TURN;
+drivePower = (TARGET_AREA_DESIRED - ta) * KP_DRIVE;</code></pre>
+
+        <h3 style="color: var(--primary-gold); margin-top: 1.5rem; margin-bottom: 0.5rem;">3. Student Self-Assessment Checklist</h3>
+        <ul class="task-list">
+          <li class="task-item"><input type="checkbox"> I can explain what tx and ta represent in Limelight telemetry.</li>
+          <li class="task-item"><input type="checkbox"> I know how to clamp motor powers between -0.4 and +0.4 for safe testing.</li>
+          <li class="task-item"><input type="checkbox"> I understand why Arcade Drive mixing requires magnitude normalization when power exceeds 1.0.</li>
+          <li class="task-item"><input type="checkbox"> I can explain why the deadman switch trigger is required for autonomous summon mode.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TAB 3: Limelight Recipes -->
+    <section id="recipes" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">🎨 Recipe: Option 2 — HSV Color Blob Detection</h2>
+        <p style="margin-bottom: 1.5rem;">Follow these steps to configure Pipeline 1 on your Limelight to track a colored shirt or marker:</p>
+
+        <ol style="margin-left: 1.5rem; line-height: 2; color: var(--text-main);">
+          <li><strong>Connect to Limelight Web GUI:</strong> Connect laptop to robot Wi-Fi and open <code>http://10.XX.YY.11:5801</code> (or <code>http://limelight.local:5801</code>).</li>
+          <li><strong>Set Pipeline Type:</strong> Select <strong>Pipeline 1</strong> and set type to <strong>Color Detection / Thresholding</strong>.</li>
+          <li><strong>Tune HSV Sliders:</strong> Switch to Threshold View and adjust Hue (H), Saturation (S), and Value (V) sliders until only your target object appears white.</li>
+          <li><strong>Apply Contour Filters:</strong> Set Area Min to <code>0.5%</code>, set Erosion/Dilation to <code>1</code> or <code>2</code> to smooth speckle noise.</li>
+          <li><strong>Save Pipeline:</strong> Click <em>Save Pipeline</em>!</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- TAB 4: Coach Solutions -->
+    <section id="solutions" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">📋 Coach Solutions & Answer Keys</h2>
+        <p style="margin-bottom: 1.5rem;">Reference implementations and solution keys for coaches and team mentors.</p>
+
+        <div class="accordion">
+          <div class="accordion-header">
+            <span>Exercise 1: Solution Key (Practice1_PControl.java)</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="accordion-body">
+            <pre><code>public static double calculateTurnPower(double tx) {
+    double rawPower = tx * KP_TURN;
+    return Math.max(-MAX_SPEED, Math.min(MAX_SPEED, rawPower));
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="accordion">
+          <div class="accordion-header">
+            <span>Exercise 2: Solution Key (Practice2_ArcadeDrive.java)</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="accordion-body">
+            <pre><code>public static double[] mixArcadeDrive(double drive, double turn) {
+    double leftPower  = drive + turn;
+    double rightPower = drive - turn;
+    double max = Math.max(Math.abs(leftPower), Math.abs(rightPower));
+    if (max > 1.0) {
+        leftPower /= max;
+        rightPower /= max;
+    }
+    return new double[]{leftPower, rightPower};
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>FTC Team Coach Portal • Built for FIRST Tech Challenge • Limelight 3A Vision & Robotics Learning</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

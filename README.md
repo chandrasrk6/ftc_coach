@@ -73,10 +73,25 @@ Before working with the physical robot, students can build confidence by running
 
 ---
 
+## 🌐 Interactive Web Portal (GitHub Pages Ready)
+
+For the best reading and learning experience, open **[index.html](file:///c:/Users/chand/OneDrive/Documents/ftc_coach/index.html)** in any web browser!
+
+Features of the web portal:
+- 🎮 **Live Limelight Telemetry Simulator Widget:** Move sliders for `tx` and `ta` to watch P-control math calculate motor outputs live!
+- 📚 **Interactive Student Lessons:** Glassmorphism cards with code snippets, formulas, and self-assessment checklists.
+- 🎨 **HSV Color Detection Recipes:** Step-by-step visual tuning guide for Option 2.
+- 📋 **Coach Solution Keys:** Toggleable code accordions for mentors and coaches.
+
+---
+
 ## 📁 Repository Structure
 
 ```
 ftc_coach/
+├── index.html                       <-- Web Portal Main Page
+├── styles.css                       <-- Portal Glassmorphism Dark Theme
+├── script.js                        <-- Interactive Simulator & Nav Logic
 ├── TeamCode/
 │   └── src/
 │       └── main/
@@ -86,6 +101,7 @@ ftc_coach/
 │                       └── ftc/
 │                           └── LimelightSummonOpMode.java
 ├── practice/ (Student Worksheets)
+│   ├── STUDENT_LESSON.md
 │   ├── README_PRACTICE.md
 │   └── src/
 │       └── main/
