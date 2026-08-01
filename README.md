@@ -62,6 +62,18 @@ Follow this recipe to configure **Pipeline 1** on your Limelight to track a spec
 
 ---
 
+## 🎓 Plain Java Practice Exercises (Pre-Robot Training)
+
+Before working with the physical robot, students can build confidence by running the plain Java simulation exercises in the `practice/` directory:
+
+- 🟢 **[Practice1_PControl.java](file:///c:/Users/chand/OneDrive/Documents/ftc_coach/practice/src/main/java/com/ftc/practice/Practice1_PControl.java):** Master Proportional Control math and power clamping.
+- 🟡 **[Practice2_ArcadeDrive.java](file:///c:/Users/chand/OneDrive/Documents/ftc_coach/practice/src/main/java/com/ftc/practice/Practice2_ArcadeDrive.java):** Practice Arcade Drive power mixing and magnitude normalization.
+- 🔴 **[Practice3_SummonSimulator.java](file:///c:/Users/chand/OneDrive/Documents/ftc_coach/practice/src/main/java/com/ftc/practice/Practice3_SummonSimulator.java):** Run a full console simulation of 6 time-steps testing target lock, deadman switch, and emergency stop.
+
+See **[practice/README_PRACTICE.md](file:///c:/Users/chand/OneDrive/Documents/ftc_coach/practice/README_PRACTICE.md)** for detailed instructions.
+
+---
+
 ## 📁 Repository Structure
 
 ```
@@ -74,6 +86,17 @@ ftc_coach/
 │                   └── firstinspires/
 │                       └── ftc/
 │                           └── LimelightSummonOpMode.java
+├── practice/
+│   ├── README_PRACTICE.md
+│   └── src/
+│       └── main/
+│           └── java/
+│               └── com/
+│                   └── ftc/
+│                       └── practice/
+│                           ├── Practice1_PControl.java
+│                           ├── Practice2_ArcadeDrive.java
+│                           └── Practice3_SummonSimulator.java
 ├── .gitignore
 └── README.md
 ```
