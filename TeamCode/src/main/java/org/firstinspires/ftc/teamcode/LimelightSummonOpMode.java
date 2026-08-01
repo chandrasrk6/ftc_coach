@@ -30,7 +30,13 @@ public class LimelightSummonOpMode extends LinearOpMode {
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.setPollRateHz(100);
         limelight.start();
-        limelight.pipelineSwitch(0); // Pipeline 0: AprilTag / Neural Target
+        int activePipeline = 0; // Default: 0 = AprilTag, 1 = Color Thresholding Blob, 2 = Neural Detector
+        limelight.pipelineSwitch(activePipeline);
+
+        // Track dpad state to prevent rapid toggling
+        boolean lastDpadLeft = false;
+        boolean lastDpadRight = false;
+        boolean lastDpadUp = false;
 
         // Initialize Drivetrain Motors
         leftFront  = hardwareMap.get(DcMotor.class, "leftFront");
@@ -43,15 +49,39 @@ public class LimelightSummonOpMode extends LinearOpMode {
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
         telemetry.addData("Status", "Initialized. Point Limelight at target.");
+        telemetry.addData("Pipelines", "D-Pad Left: AprilTag (0) | D-Pad Right: Color Blob (1) | D-Pad Up: Neural (2)");
         telemetry.update();
 
         waitForStart();
 
         while (opModeIsActive()) {
+            // Pipeline Selection Controls
+            if (gamepad1.dpad_left && !lastDpadLeft) {
+                activePipeline = 0; // AprilTag Beacon
+                limelight.pipelineSwitch(activePipeline);
+            } else if (gamepad1.dpad_right && !lastDpadRight) {
+                activePipeline = 1; // Color Detection Blob (Option 2)
+                limelight.pipelineSwitch(activePipeline);
+            } else if (gamepad1.dpad_up && !lastDpadUp) {
+                activePipeline = 2; // Neural Network Detector
+                limelight.pipelineSwitch(activePipeline);
+            }
+            lastDpadLeft  = gamepad1.dpad_left;
+            lastDpadRight = gamepad1.dpad_right;
+            lastDpadUp    = gamepad1.dpad_up;
+
             LLResult result = limelight.getLatestResult();
 
             // Safety Deadman Switch: Driver must hold Right Trigger to enable Summon
             boolean summonActive = gamepad1.right_trigger > 0.3;
+
+            String pipelineName;
+            switch (activePipeline) {
+                case 0:  pipelineName = "0 (AprilTag Beacon)"; break;
+                case 1:  pipelineName = "1 (Color Blob - Option 2)"; break;
+                case 2:  pipelineName = "2 (Neural Detector)"; break;
+                default: pipelineName = String.valueOf(activePipeline); break;
+            }
 
             if (summonActive && result != null && result.isValid()) {
                 double tx = result.getTx(); // Angle offset in degrees (-31 to +31)
@@ -77,6 +107,7 @@ public class LimelightSummonOpMode extends LinearOpMode {
                 setArcadePower(drivePower, turnPower);
 
                 telemetry.addData("Summon State", "ACTIVE & TRACKING");
+                telemetry.addData("Active Pipeline", pipelineName);
                 telemetry.addData("Heading Error (tx)", "%.2f deg", tx);
                 telemetry.addData("Target Area (ta)", "%.2f %%", ta);
                 telemetry.addData("Drive Power", "%.2f", drivePower);
@@ -84,6 +115,7 @@ public class LimelightSummonOpMode extends LinearOpMode {
             } else {
                 stopMotors();
 
+                telemetry.addData("Active Pipeline", pipelineName);
                 if (!summonActive) {
                     telemetry.addData("Summon State", "STANDBY (Hold Gamepad1 Right Trigger)");
                 } else {
