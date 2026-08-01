@@ -4,6 +4,12 @@ Before deploying vision code to a physical FTC robot, students can master the co
 
 ---
 
+## 📖 Student Lesson & Refresher Guide
+
+👉 **Start Here:** Read **[STUDENT_LESSON.md](file:///c:/Users/chand/OneDrive/Documents/ftc_coach/practice/STUDENT_LESSON.md)** for a complete explanation of vision telemetry (`tx`/`ta`), Proportional Control math, Arcade Drive power mixing, safety rules, expectations, and goals!
+
+---
+
 ## 🎯 Learning Objectives
 
 1. Understand **Proportional Control (P-Controller)** math: `power = error * Kp`.
