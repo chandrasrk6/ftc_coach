@@ -157,3 +157,120 @@ git commit -m "feat: Add FlywheelShooterOpMode with dual target modes"
 git commit -m "lesson: Add Practice5_ShooterAutoAim student worksheet"
 git commit -m "fix: Correct KP_TURN gain from 0.05 to 0.025"
 ```
+
+---
+
+## 🌿 Feature Branch Workflow
+
+A **feature branch** isolates one person's work so it never breaks the `main` branch that the whole team depends on.
+
+```
+main  ──●──────────────────────────────────●── (always stable)
+         \                                /
+feature   ●── ●── ●── ●── ●── ●── ●── ●    (your work in isolation)
+```
+
+### Step 1 — Start from updated main
+```bash
+git checkout main
+git pull origin main          # Always get latest first!
+```
+
+### Step 2 — Create and switch to feature branch
+```bash
+git checkout -b feature/flywheel-shooter
+```
+> **Naming conventions:** `feature/`, `fix/`, `lesson/` + short description
+
+### Step 3 — Commit your work regularly
+```bash
+git add .
+git commit -m "feat: Add flywheel velocity PIDF control"
+```
+
+### Step 4 — Push feature branch to GitHub
+```bash
+git push origin feature/flywheel-shooter
+```
+
+### Step 5 — Open a Pull Request on GitHub
+- Go to `github.com/chandrasrk6/ftc_coach`
+- Click **"Compare & pull request"** banner
+- Add description, request coach review → **"Merge pull request"**
+
+### Step 6 — Clean up after merge
+```bash
+git checkout main
+git pull origin main                               # Get the merged changes
+git branch -d feature/flywheel-shooter             # Delete local branch
+git push origin --delete feature/flywheel-shooter  # Delete remote branch
+```
+
+---
+
+## 🔄 Keeping Feature Branch in Sync with main
+
+When teammates merge new things to `main` while you're still working on your branch:
+
+### Option A: `merge` (simpler — recommended for beginners)
+```bash
+git checkout feature/flywheel-shooter
+git merge main                   # Pull main's new changes into your branch
+```
+
+### Option B: `rebase` (cleaner history — advanced)
+```bash
+git checkout feature/flywheel-shooter
+git rebase main                  # Replay your commits on top of latest main
+```
+
+> ⚠️ **FTC Team Rule:** Use `merge` until comfortable. `rebase` rewrites history and can confuse beginners.
+
+---
+
+## ⚔️ Resolving Merge Conflicts
+
+When two people edit the **same line** in the same file:
+
+```java
+<<<<<<< HEAD  (your branch version)
+private static final double KP_TURN = 0.03;
+=======
+private static final double KP_TURN = 0.025;
+>>>>>>> main  (incoming version)
+```
+
+**Fix Steps:**
+1. Edit the file — delete `<<<<`, `====`, `>>>>` markers, keep the correct line
+2. `git add FlywheelShooterOpMode.java`
+3. `git commit -m "fix: Resolve merge conflict in KP_TURN constant"`
+
+---
+
+## 🏆 FTC Team Branch Strategy
+
+```
+main                               ← Stable, coach-reviewed only
+  ├── feature/flywheel-shooter     ← Student A
+  ├── feature/color-detection      ← Student B
+  ├── lesson/practice-exercise-6  ← Student C
+  └── fix/deadman-threshold        ← Student D
+```
+
+Each student works independently → Pull Request → Coach reviews → Merged to `main`. ✅
+
+---
+
+## 🌿 Branch Command Cheat Sheet
+
+| Command | What it Does |
+|---|---|
+| `git checkout -b feature/name` | Create + switch to new branch |
+| `git checkout main` | Switch back to main |
+| `git branch` | List all local branches |
+| `git branch -a` | List local + remote branches |
+| `git merge main` | Sync latest main into your branch |
+| `git rebase main` | Replay your commits on top of latest main |
+| `git push origin feature/name` | Push feature branch to GitHub |
+| `git branch -d feature/name` | Delete local branch (after merge) |
+| `git push origin --delete feature/name` | Delete remote branch |
