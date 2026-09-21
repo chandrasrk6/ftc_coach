@@ -18,6 +18,8 @@
     <ul class="nav-tabs">
       <li><button class="nav-btn active" data-tab="simulator">🎮 Summon Sim</button></li>
       <li><button class="nav-btn" data-tab="shooter-sim">🏀 Shooter Sim</button></li>
+      <li><button class="nav-btn" data-tab="java-lesson">☕ Java Foundations</button></li>
+      <li><button class="nav-btn" data-tab="biobuzz-lesson">🐝 Biobuzz First Principles</button></li>
       <li><button class="nav-btn" data-tab="lesson">📚 Summon Lesson</button></li>
       <li><button class="nav-btn" data-tab="shooter-lesson">🏀 Shooter Lesson</button></li>
       <li><button class="nav-btn" data-tab="recipes">🎨 Vision Recipes</button></li>
@@ -28,13 +30,13 @@
   <div class="container">
     <!-- Hero Banner -->
     <section class="hero">
-      <h1 class="hero-title">Limelight Target Follower & Flywheel Shooter Portal</h1>
-      <p class="hero-subtitle">Interactive student lessons, plain Java feedback control practice labs, Limelight HSV vision recipes, and coach answer keys for FIRST Tech Challenge.</p>
+      <h1 class="hero-title">Limelight Target Follower & Biobuzz Control Portal</h1>
+      <p class="hero-subtitle">Interactive student lessons, First-Principles FTC control engineering, plain Java feedback control practice labs, Limelight vision recipes, and coach answer keys for FIRST Tech Challenge.</p>
       <div class="badge-row">
         <span class="badge">FTC SDK 9.x+</span>
+        <span class="badge">First-Principles Thinking</span>
+        <span class="badge">Biobuzz FSM & Closed-Loop PID</span>
         <span class="badge">Limelight 3A</span>
-        <span class="badge">Flywheel PIDF Velocity</span>
-        <span class="badge">Goal Post AprilTag & Person Catch</span>
       </div>
     </section>
 
@@ -162,6 +164,80 @@
       </div>
     </section>
 
+    <!-- TAB: Java Foundations Lesson -->
+    <section id="java-lesson" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">☕ Java Foundations for FTC Robotics</h2>
+        <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+          Learn the essential Java concepts needed to program FTC robots, from hardware variables to custom methods and autonomous state machines.
+        </p>
+
+        <h3 style="color: var(--primary-gold); margin-bottom: 0.5rem;">1. Variables & Hardware Memory</h3>
+        <p>FTC Java uses 4 main data types to interact with hardware:</p>
+        <ul style="margin: 0.5rem 0 1rem 1.5rem; color: var(--text-main); line-height: 1.8;">
+          <li><code>double</code>: Motor power (<code>-1.0</code> to <code>+1.0</code>), Limelight offsets (<code>tx</code>, <code>ta</code>).</li>
+          <li><code>boolean</code>: Controller buttons (<code>gamepad1.a</code>), target visibility (<code>isValid</code>).</li>
+          <li><code>int</code>: Motor encoder ticks, vision pipeline numbers.</li>
+          <li><code>String</code>: Telemetry screen messages and state names.</li>
+        </ul>
+
+        <h3 style="color: var(--primary-gold); margin-top: 1.5rem; margin-bottom: 0.5rem;">2. Decision Logic (If / Else)</h3>
+        <p>Make safety decisions based on sensor input:</p>
+        <pre><code>if (!gamepad1.right_trigger > 0.2) {
+    motorPower = 0.0; // Safety Stop!
+} else if (ta > 18.0) {
+    motorPower = 0.0; // Too close!
+} else {
+    motorPower = 0.4; // Safe to drive
+}</code></pre>
+
+        <h3 style="color: var(--primary-gold); margin-top: 1.5rem; margin-bottom: 0.5rem;">3. Custom Calculation Methods</h3>
+        <p>Package complex formulas into reusable methods:</p>
+        <pre><code>public double calculateTurnPower(double tx) {
+    double raw = tx * 0.025;
+    return Math.max(-0.4, Math.min(0.4, raw));
+}</code></pre>
+
+        <h3 style="color: var(--primary-gold); margin-top: 1.5rem; margin-bottom: 0.5rem;">4. Enums for Robot State Machines</h3>
+        <p>Define discrete autonomous steps using Enums:</p>
+        <pre><code>public enum RobotState { SEARCH, ALIGN, HARVEST, RETURN }</code></pre>
+      </div>
+    </section>
+
+    <!-- TAB: Biobuzz First Principles Lesson -->
+    <section id="biobuzz-lesson" class="tab-content">
+      <div class="card">
+        <h2 class="card-title">🐝 FTC Biobuzz Competition: Control Engineering from First Principles</h2>
+        <p style="margin-bottom: 1.5rem; color: var(--text-muted);">
+          Master robot control by breaking systems down into fundamental physics, geometry, control theory, and non-blocking state machine architecture.
+        </p>
+
+        <h3 style="color: var(--primary-gold); margin-bottom: 0.5rem;">1. Physics of Motion & Kinematics</h3>
+        <p>A planar FTC robot has 3 Degrees of Freedom $(X, Y, \theta)$. Wheel torque transforms via friction into ground reaction force:</p>
+        <pre><code>leftSpeed  = driveVelocity + turnVelocity;
+rightSpeed = driveVelocity - turnVelocity;</code></pre>
+
+        <h3 style="color: var(--primary-gold); margin-top: 1.5rem; margin-bottom: 0.5rem;">2. Closed-Loop PID + Static Feedforward</h3>
+        <p>Instead of guessing motor power, continuously compute control signal from error $e(t) = \text{Target} - \text{Measured}$:</p>
+        <pre><code>turnPower = (tx * KP_TURN) + (dError * KD_TURN) + (Math.signum(tx) * KS_STATIC);</code></pre>
+
+        <h3 style="color: var(--primary-gold); margin-top: 1.5rem; margin-bottom: 0.5rem;">3. Biobuzz Non-Blocking Finite State Machine</h3>
+        <ul style="margin: 0.5rem 0 1rem 1.5rem; color: var(--text-main); line-height: 1.8;">
+          <li><strong>SEARCH_BEACON:</strong> Slow rotational scan for flower AprilTag / Color target.</li>
+          <li><strong>ALIGN_AND_APPROACH:</strong> Closed-loop PID tracking toward flower.</li>
+          <li><strong>HARVEST_POLLEN:</strong> Non-blocking mechanism action cycle.</li>
+          <li><strong>RETURN_TO_HIVE:</strong> Autonomous return sequence.</li>
+        </ul>
+
+        <h3 style="color: var(--primary-gold); margin-top: 1.5rem; margin-bottom: 0.5rem;">4. Multi-Layered Fail-Safes</h3>
+        <ol style="margin-left: 1.5rem; color: var(--text-muted); line-height: 1.8;">
+          <li><strong>Deadman Trigger:</strong> Gamepad trigger release immediately zeros all motors.</li>
+          <li><strong>Vision Loss:</strong> `isValid() == false` resets state to `SEARCH_BEACON`.</li>
+          <li><strong>Proximity Halt:</strong> `ta >= 22.0%` halts forward drive to avoid collisions.</li>
+        </ol>
+      </div>
+    </section>
+
     <!-- TAB 3: Student Summon Lesson -->
     <section id="lesson" class="tab-content">
       <div class="card">
@@ -233,6 +309,26 @@ drivePower = (TARGET_AREA_DESIRED - ta) * KP_DRIVE;</code></pre>
 
         <div class="accordion">
           <div class="accordion-header">
+            <span>Exercise 0: Solution Key (Solution0_JavaBasics.java)</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="accordion-body">
+            <pre><code>public static double calculateTurnPower(double tx) {
+    double rawPower = tx * 0.025;
+    return Math.max(-0.4, Math.min(0.4, rawPower));
+}
+
+public static RobotState determineRobotState(boolean triggerPressed, boolean targetSeen, double targetArea) {
+    if (!triggerPressed) return RobotState.STOPPED;
+    else if (targetSeen && targetArea > 18.0) return RobotState.SAFETY_HALT;
+    else if (targetSeen) return RobotState.TARGET_LOCKED;
+    else return RobotState.DRIVING_FORWARD;
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="accordion">
+          <div class="accordion-header">
             <span>Exercise 1: Solution Key (Practice1_PControl.java)</span>
             <span class="arrow">▼</span>
           </div>
@@ -287,6 +383,26 @@ drivePower = (TARGET_AREA_DESIRED - ta) * KP_DRIVE;</code></pre>
     boolean aligned = Math.abs(tx) <= 1.5;
     boolean speedReady = Math.abs(currentRPM - targetRPM) <= 75.0;
     return aligned && speedReady;
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="accordion">
+          <div class="accordion-header">
+            <span>Exercise 6: Biobuzz FSM Solution Key (Solution4_BiobuzzFSM.java)</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="accordion-body">
+            <pre><code>// Closed-Loop PD + Feedforward Steering
+double headingError = sensor.tx;
+double dError = headingError - lastHeadingError;
+turnPower = (headingError * KP_TURN) + (dError * KD_TURN) + (Math.signum(headingError) * KS_STATIC);
+
+// Power Normalization under saturation
+double maxMag = Math.max(Math.abs(leftMotor), Math.abs(rightMotor));
+if (maxMag > MAX_POWER_LIMIT) {
+    leftMotor  = (leftMotor / maxMag) * MAX_POWER_LIMIT;
+    rightMotor = (rightMotor / maxMag) * MAX_POWER_LIMIT;
 }</code></pre>
           </div>
         </div>
